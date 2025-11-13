@@ -31,6 +31,7 @@ module "do_create_domain" {
   source      = "./do_create_domain"
   for_each    = toset(var.domains)
   domain_name = each.key
+  lb_ip       = var.lb_external_ip
 }
 
 resource "digitalocean_record" "login_mx1" {

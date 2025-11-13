@@ -8,7 +8,7 @@ terraform {
   backend "s3" {
     region = "eu-north-1"
     bucket = "terraform-login-state"
-    key = "digitalocean/terraform.tfstate"
+    key    = "digitalocean/terraform.tfstate"
   }
 }
 

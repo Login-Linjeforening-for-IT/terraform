@@ -1,11 +1,5 @@
 // State moves for domains: migrate from old addresses to new for_each keys
 
-// Standalone domain moved into module management
-moved {
-	from = digitalocean_domain.logntnu
-	to   = module.do_create_domain["logntnu.no"].digitalocean_domain.example_domains
-}
-
 // Old index-based module instances -> new key-based instances
 moved {
 	from = module.do_create_domain[0].digitalocean_domain.example_domains
@@ -81,11 +75,6 @@ moved {
 }
 
 moved {
-	from = module.do_create_domain[18].digitalocean_domain.example_domains
-	to   = module.do_create_domain["logntnu.com"].digitalocean_domain.example_domains
-}
-
-moved {
 	from = module.do_create_domain[19].digitalocean_domain.example_domains
 	to   = module.do_create_domain["ntnulogin.no"].digitalocean_domain.example_domains
 }
@@ -156,6 +145,27 @@ moved {
 moved {
 	from = digitalocean_record.default["ntnulogin.no"]
 	to   = module.do_create_domain["ntnulogin.no"].digitalocean_record.default
+}
+
+// Additional moves surfaced by latest plan
+moved {
+	from = digitalocean_record.default["login.coffee"]
+	to   = module.do_create_domain["login.coffee"].digitalocean_record.default
+}
+
+moved {
+	from = digitalocean_record.default["loginntnu.no"]
+	to   = module.do_create_domain["loginntnu.no"].digitalocean_record.default
+}
+
+moved {
+	from = digitalocean_record.default["logntnu.com"]
+	to   = module.do_create_domain["logntnu.com"].digitalocean_record.default
+}
+
+moved {
+	from = digitalocean_record.default["logntnu.no"]
+	to   = module.do_create_domain["logntnu.no"].digitalocean_record.default
 }
 
 // Record-level moves from old module indices -> new key-based instances (TXT, DMARC, DomainKey)
@@ -349,20 +359,6 @@ moved {
 moved {
 	from = module.do_create_domain[17].digitalocean_record.domainkey
 	to   = module.do_create_domain["logintnu.no"].digitalocean_record.domainkey
-}
-
-// 18 -> logntnu.com
-moved {
-	from = module.do_create_domain[18].digitalocean_record.txt
-	to   = module.do_create_domain["logntnu.com"].digitalocean_record.txt
-}
-moved {
-	from = module.do_create_domain[18].digitalocean_record.dmarc
-	to   = module.do_create_domain["logntnu.com"].digitalocean_record.dmarc
-}
-moved {
-	from = module.do_create_domain[18].digitalocean_record.domainkey
-	to   = module.do_create_domain["logntnu.com"].digitalocean_record.domainkey
 }
 
 // 19 -> ntnulogin.no

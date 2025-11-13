@@ -2,7 +2,6 @@ variable "login" {
   type        = string
   description = "login.no domain name"
   default     = "login.no"
-  sensitive   = false
 }
 
 variable "lb_external_ip" {
