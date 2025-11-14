@@ -38,7 +38,7 @@ jobs:
         working-directory: ${{ inputs.stack }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup OpenTofu
         uses: opentofu/setup-opentofu@v1
       - name: OpenTofu Init
@@ -46,7 +46,7 @@ jobs:
       - name: OpenTofu Plan
         run: tofu ${{ inputs.action }} ${{ inputs.action=='fmt' && '-check' || '' }} ${{ inputs.action=='plan' && format('-out=tfplan-{0}.binary', inputs.stack) || '' }}
       - name: Upload tfplan as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         if: ${{ inputs.action == 'plan' }}
         with:
           name: tfplan-${{ inputs.stack }}
