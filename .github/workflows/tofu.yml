@@ -17,10 +17,6 @@ on:
       env:
         required: true
         type: string
-      dry_run:
-        required: false
-        type: boolean
-        default: false
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -40,7 +36,6 @@ jobs:
     steps:
       - name: Validate required secrets
         run: |
-          set -euo pipefail
           missing=()
           [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ] && missing+=(AWS_ACCESS_KEY_ID)
           [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ] && missing+=(AWS_SECRET_ACCESS_KEY)
