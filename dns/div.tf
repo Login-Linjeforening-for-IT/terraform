@@ -5,8 +5,8 @@
 # The record is created at the root level (@) of the domain specified in var.login
 # with the Google verification token required for domain verification.
 resource "digitalocean_record" "google_verify" {
-    domain = var.login
-    type   = "TXT"
-    name   = "@"
-    value  = "google-site-verification=WDHZtpjiTEsnySmCP-lQUQibvV7pFbHcIC4cG_gWUxU"
+  domain = var.login
+  type   = "TXT"
+  name   = "@"
+  value  = "google-site-verification=WDHZtpjiTEsnySmCP-lQUQibvV7pFbHcIC4cG_gWUxU"
 }
