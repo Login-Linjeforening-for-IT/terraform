@@ -1,0 +1,14 @@
+name: DNS Checks
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'dns/**'
+
+jobs:
+  checks:
+    uses: ./.github/workflows/pr-checks.yml
+    with:
+      stack: "dns"
+    secrets: inherit
