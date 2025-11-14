@@ -27,6 +27,7 @@ on:
       AWS_SECRET_ACCESS_KEY:
         required: true
       DIGITALOCEAN_TOKEN:
+        required: true
       
 
 jobs:
@@ -37,13 +38,25 @@ jobs:
       run:
         working-directory: ${{ inputs.stack }}
     steps:
+      - name: Validate required secrets
+        run: |
+          set -euo pipefail
+          missing=()
+          [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ] && missing+=(AWS_ACCESS_KEY_ID)
+          [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ] && missing+=(AWS_SECRET_ACCESS_KEY)
+          [ -z "${{ secrets.DIGITALOCEAN_TOKEN }}" ] && missing+=(DIGITALOCEAN_TOKEN)
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Missing required secrets: ${missing[*]}" >&2
+            exit 1
+          fi
+          echo "All required secrets are present."
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Setup OpenTofu
         uses: opentofu/setup-opentofu@v1
       - name: OpenTofu Init
         run: tofu init
-      - name: OpenTofu Plan
+      - name: OpenTofu ${{ inputs.action }}
         run: tofu ${{ inputs.action }} ${{ inputs.action=='fmt' && '-check' || '' }} ${{ inputs.action=='plan' && format('-out=tfplan-{0}.binary', inputs.stack) || '' }}
       - name: Upload tfplan as artifact
         uses: actions/upload-artifact@v5
