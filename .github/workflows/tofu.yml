@@ -56,7 +56,7 @@ jobs:
         run: tofu show -no-color tfplan-${{ inputs.stack }}.binary > tfplan-${{ inputs.stack }}.txt
       - name: Upload plan text as artifact
         if: ${{ inputs.action == 'plan' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: tfplan-${{ inputs.stack }}-text
           path: ${{ inputs.stack }}/tfplan-${{ inputs.stack }}.txt
