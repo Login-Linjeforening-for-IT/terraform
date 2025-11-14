@@ -7,10 +7,6 @@ on:
       stack:
         required: true
         type: string
-      # Which branch to checkout code from
-      branch:
-        type: string
-        default: 'main'
       action:
         required: true
         type: string
@@ -23,16 +19,11 @@ on:
       AWS_SECRET_ACCESS_KEY:
         required: true
       DIGITALOCEAN_TOKEN:
-        required: true
       
 
 jobs:
-  tofu:
+  secret-check:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.env }}
-    defaults:
-      run:
-        working-directory: ${{ inputs.stack }}
     steps:
       - name: Validate required secrets
         run: |
@@ -45,6 +36,13 @@ jobs:
             exit 1
           fi
           echo "All required secrets are present."
+  tofu:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.env }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.stack }}
+    steps:
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Setup OpenTofu
@@ -58,7 +56,7 @@ jobs:
         if: ${{ inputs.action == 'plan' }}
         with:
           name: tfplan-${{ inputs.stack }}
-          path: ${{ inputs.stack }}/tfplan-${{ inputs.stack }}.binary
+          path: tfplan-${{ inputs.stack }}.binary
       - name: Generate human-readable plan
         if: ${{ inputs.action == 'plan' }}
         run: tofu show -no-color tfplan-${{ inputs.stack }}.binary > tfplan-${{ inputs.stack }}.txt
@@ -67,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: tfplan-${{ inputs.stack }}-text
-          path: ${{ inputs.stack }}/tfplan-${{ inputs.stack }}.txt
+          path: tfplan-${{ inputs.stack }}.txt
     env:
       DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

@@ -21,19 +21,19 @@ jobs:
       - name: Print plan
         run: |
           echo "--- Begin OpenTofu plan (dns) ---"
-          if [ -f dns/tfplan-dns.txt ]; then
+          if [ -f tfplan-dns.txt ]; then
             # Truncate to keep logs readable if extremely large
             LIMIT=200000
-            SIZE=$(wc -c < dns/tfplan-dns.txt | tr -d ' ')
+            SIZE=$(wc -c < tfplan-dns.txt | tr -d ' ')
             if [ "$SIZE" -gt "$LIMIT" ]; then
-              head -c "$LIMIT" dns/tfplan-dns.txt
+              head -c "$LIMIT" tfplan-dns.txt
               echo
               echo "... (truncated)"
             else
-              cat dns/tfplan-dns.txt
+              cat tfplan-dns.txt
             fi
           else
-            echo "Plan text file not found at dns/tfplan-dns.txt"
+            echo "Plan text file not found at tfplan-dns.txt"
           fi
           echo "--- End OpenTofu plan (dns) ---"
       
