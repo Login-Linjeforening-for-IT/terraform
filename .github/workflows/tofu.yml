@@ -31,7 +31,7 @@ on:
 
 jobs:
   tofu:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     environment: ${{ inputs.env }}
     defaults:
       run:
