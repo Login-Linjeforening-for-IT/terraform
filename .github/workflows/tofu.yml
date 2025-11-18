@@ -56,7 +56,8 @@ jobs:
         if: ${{ inputs.action == 'plan' }}
         with:
           name: tfplan-${{ inputs.stack }}
-          path: tfplan-${{ inputs.stack }}.binary
+          # actions/upload-artifact does not inherit the job run.working-directory, so we must prefix with the stack folder
+          path: ${{ inputs.stack }}/tfplan-${{ inputs.stack }}.binary
       - name: Generate human-readable plan
         if: ${{ inputs.action == 'plan' }}
         run: tofu show -no-color tfplan-${{ inputs.stack }}.binary > tfplan-${{ inputs.stack }}.txt
@@ -65,7 +66,8 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: tfplan-${{ inputs.stack }}-text
-          path: tfplan-${{ inputs.stack }}.txt
+          # Prefix path with stack folder for same reason as above
+          path: ${{ inputs.stack }}/tfplan-${{ inputs.stack }}.txt
     env:
       DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
