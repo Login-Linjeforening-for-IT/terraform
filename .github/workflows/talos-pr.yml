@@ -1,0 +1,14 @@
+name: Talos Checks
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'talos/**'
+
+jobs:
+  checks:
+    uses: ./.github/workflows/pr-checks.yml
+    with:
+      stack: "talos"
+    secrets: inherit
