@@ -13,29 +13,29 @@ resource "digitalocean_domain" "example_domains" {
 }
 
 resource "digitalocean_record" "txt" {
-  domain     = digitalocean_domain.example_domains.name
-  type       = "TXT"
-  name       = "@"
-  value      = "v=spf1 -all"
+  domain = digitalocean_domain.example_domains.name
+  type   = "TXT"
+  name   = "@"
+  value  = "v=spf1 -all"
 }
 
 resource "digitalocean_record" "dmarc" {
-  domain     = digitalocean_domain.example_domains.name
-  name       = "_dmarc"
-  type       = "TXT"
-  value      = "v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; rua=mailto:tekkom.login@gmail.com"
+  domain = digitalocean_domain.example_domains.name
+  name   = "_dmarc"
+  type   = "TXT"
+  value  = "v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; rua=mailto:tekkom.login@gmail.com"
 }
 
 resource "digitalocean_record" "domainkey" {
-  domain     = digitalocean_domain.example_domains.name
-  name       = "*._domainkey"
-  type       = "TXT"
-  value      = "v=DKIM1; p="
+  domain = digitalocean_domain.example_domains.name
+  name   = "*._domainkey"
+  type   = "TXT"
+  value  = "v=DKIM1; p="
 }
 
 resource "digitalocean_record" "default" {
-  name     = "@"
-  value    = var.lb_ip
-  type     = "A"
-  domain   = digitalocean_domain.example_domains.name
+  name   = "@"
+  value  = var.lb_ip
+  type   = "A"
+  domain = digitalocean_domain.example_domains.name
 }
