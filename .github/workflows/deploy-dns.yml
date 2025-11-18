@@ -1,43 +1,27 @@
 name: Deploy DNS
 on:
-  workflow_run:
-    workflows: ["DNS Checks"]
-    branches: [main]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+    paths:
+      - 'dns/**'
 
 jobs:
   deploy-test:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    permissions:
-      actions: read
-      contents: read
     runs-on: ubuntu-latest
     steps:
-      - name: Download tfplan text artifact from triggering run
-        uses: actions/download-artifact@v4
-        with:
-          name: tfplan-dns-text
-          run-id: ${{ github.event.workflow_run.id }}
-          path: .
-      - name: Print plan
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+      - name: OpenTofu Init
         run: |
-          echo "--- Begin OpenTofu plan (dns) ---"
-          if [ -f tfplan-dns.txt ]; then
-            # Truncate to keep logs readable if extremely large
-            LIMIT=200000
-            SIZE=$(wc -c < tfplan-dns.txt | tr -d ' ')
-            if [ "$SIZE" -gt "$LIMIT" ]; then
-              head -c "$LIMIT" tfplan-dns.txt
-              echo
-              echo "... (truncated)"
-            else
-              cat tfplan-dns.txt
-            fi
-          else
-            echo "Plan text file not found at tfplan-dns.txt"
-          fi
-          echo "--- End OpenTofu plan (dns) ---"
+          cd dns
+          tofu init
+      - name: OpenTofu Deploy
+        run: |
+          cd dns
+          tofu plan -out=tfplan-dns.binary
       
   # deploy:
   #   uses: ./.github/workflows/tofu.yml
