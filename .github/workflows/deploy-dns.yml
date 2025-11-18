@@ -2,6 +2,7 @@ name: Deploy DNS
 on:
   workflow_run:
     workflows: ["DNS Checks"]
+    branches: [main]
     types:
       - completed
 
