@@ -22,20 +22,6 @@ on:
       
 
 jobs:
-  secret-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Validate required secrets
-        run: |
-          missing=()
-          [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ] && missing+=(AWS_ACCESS_KEY_ID)
-          [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ] && missing+=(AWS_SECRET_ACCESS_KEY)
-          [ -z "${{ secrets.DIGITALOCEAN_TOKEN }}" ] && missing+=(DIGITALOCEAN_TOKEN)
-          if [ ${#missing[@]} -gt 0 ]; then
-            echo "Missing required secrets: ${missing[*]}" >&2
-            exit 1
-          fi
-          echo "All required secrets are present."
   tofu:
     runs-on: ubuntu-latest
     environment: ${{ inputs.env }}
