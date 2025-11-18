@@ -2,47 +2,38 @@ name: Deploy DNS
 on:
   workflow_run:
     workflows: ["DNS Checks"]
-    branches: [main]
     types:
       - completed
 
 jobs:
-  deploy-test:
+  deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment: production
     permissions:
       actions: read
       contents: read
-    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dns
     steps:
-      - name: Download tfplan text artifact from triggering run
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+      - name: Download plan artifact
         uses: actions/download-artifact@v4
         with:
-          name: tfplan-dns-text
+          name: tfplan-dns
           run-id: ${{ github.event.workflow_run.id }}
-          path: .
-      - name: Print plan
+          path: dns
+      - name: OpenTofu Init
+        run: tofu init
+      - name: Apply plan
+        env:
+          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          echo "--- Begin OpenTofu plan (dns) ---"
-          if [ -f tfplan-dns.txt ]; then
-            # Truncate to keep logs readable if extremely large
-            LIMIT=200000
-            SIZE=$(wc -c < tfplan-dns.txt | tr -d ' ')
-            if [ "$SIZE" -gt "$LIMIT" ]; then
-              head -c "$LIMIT" tfplan-dns.txt
-              echo
-              echo "... (truncated)"
-            else
-              cat tfplan-dns.txt
-            fi
-          else
-            echo "Plan text file not found at tfplan-dns.txt"
-          fi
-          echo "--- End OpenTofu plan (dns) ---"
-      
-  # deploy:
-  #   uses: ./.github/workflows/tofu.yml
-  #   with:
-  #     stack: "dns"
-  #     action: "deploy"
-  #     env: "production"
-  #   secrets: inherit
+          set -euo pipefail
+          tofu apply -auto-approve tfplan-dns.binary
