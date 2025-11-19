@@ -1,0 +1,1 @@
+data "domeneshop_domains" "domains" {}

@@ -27,6 +27,10 @@ variable "domains" {
   ]
 }
 
+module "domains" {
+  source = "../modules/domeneshop"
+}
+
 module "do_create_domain" {
   source      = "./do_create_domain"
   for_each    = toset(var.domains)
