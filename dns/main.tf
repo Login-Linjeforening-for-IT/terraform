@@ -98,7 +98,7 @@ resource "digitalocean_record" "cdn_cname" {
   value  = "beehive.ams3.cdn.digitaloceanspaces.com."
 }
 
-resource "digitalocean_record" "googe_verify_forms" {
+resource "digitalocean_record" "google_verify_forms" {
   domain = var.login
   type   = "TXT"
   name   = "forms"
