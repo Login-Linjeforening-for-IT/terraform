@@ -19,7 +19,6 @@ variable "domains" {
     "loginntnu.no",
     "logintnu.no",
     "logntnu.com",
-    "logout.no",
     "ntnulogin.no",
     "tekkom.no"
   ]
@@ -97,4 +96,11 @@ resource "digitalocean_record" "cdn_cname" {
   type   = "CNAME"
   name   = "cdn"
   value  = "beehive.ams3.cdn.digitaloceanspaces.com."
+}
+
+resource "digitalocean_record" "google_verify_forms" {
+  domain = var.login
+  type   = "TXT"
+  name   = "forms"
+  value  = "google-site-verification=ryrYCeqvEF5EDnpjioRq1DIyY6PByK-LbtkFwcI7m-c"
 }
