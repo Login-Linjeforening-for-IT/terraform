@@ -15,12 +15,10 @@ variable "domains" {
     "lngalinjeforening.no",
     "login-ntnu.no",
     "login.coffee",
-    "login.no",
     "loginlf.no",
     "loginntnu.no",
     "logintnu.no",
     "logntnu.com",
-    "logntnu.no",
     "logout.no",
     "ntnulogin.no",
     "tekkom.no"
