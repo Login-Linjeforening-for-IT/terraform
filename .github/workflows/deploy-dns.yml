@@ -7,6 +7,9 @@ on:
     paths:
       - 'dns/**'
 
+concurrency:
+  group: deploy-dns
+  cancel-in-progress: false
 jobs:
   plan:
     runs-on: ubuntu-latest
