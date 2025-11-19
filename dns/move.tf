@@ -79,6 +79,11 @@ moved {
   to   = module.do_create_domain["ntnulogin.no"].digitalocean_domain.example_domains
 }
 
+// 18 -> logntnu.com (new key-based instance)
+moved {
+  from = module.do_create_domain[18].digitalocean_domain.example_domains
+  to   = module.do_create_domain["logntnu.com"].digitalocean_domain.example_domains
+}
 
 // Record-level moves: default A records from legacy root-level for_each to module-managed
 
@@ -168,6 +173,23 @@ moved {
   to   = module.do_create_domain["logntnu.no"].digitalocean_record.default
 }
 
+// Record-level moves for old module index 18 -> new key "logntnu.com"
+moved {
+  from = module.do_create_domain[18].digitalocean_record.txt
+  to   = module.do_create_domain["logntnu.com"].digitalocean_record.txt
+}
+moved {
+  from = module.do_create_domain[18].digitalocean_record.dmarc
+  to   = module.do_create_domain["logntnu.com"].digitalocean_record.dmarc
+}
+moved {
+  from = module.do_create_domain[18].digitalocean_record.domainkey
+  to   = module.do_create_domain["logntnu.com"].digitalocean_record.domainkey
+}
+moved {
+  from = module.do_create_domain[18].digitalocean_record.default
+  to   = module.do_create_domain["logntnu.com"].digitalocean_record.default
+}
 // Record-level moves from old module indices -> new key-based instances (TXT, DMARC, DomainKey)
 
 // 0 -> cyberdagen.net
