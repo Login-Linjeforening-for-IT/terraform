@@ -1,40 +1,62 @@
 name: Deploy DNS
 on:
-  workflow_run:
-    workflows: ["DNS Checks"]
-    branches: [main]
-    types:
-      - completed
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dns/**'
 
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  plan:
     runs-on: ubuntu-latest
-    environment: production
-    permissions:
-      actions: read
-      contents: read
     defaults:
       run:
         working-directory: dns
+    env:
+      DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Setup OpenTofu
         uses: opentofu/setup-opentofu@v1
+      - name: OpenTofu Init
+        run: tofu init
+      - name: Plan
+        run: |
+          set -euo pipefail
+          tofu plan -out tfplan-dns.binary
+      - name: Upload plan artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-dns
+          path: dns/tfplan-dns.binary
+  deploy:
+    needs: plan
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: dns
+    env:
+      DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+      - name: OpenTofu Init
+        run: tofu init
       - name: Download plan artifact
         uses: actions/download-artifact@v4
         with:
           name: tfplan-dns
-          run-id: ${{ github.event.workflow_run.id }}
           path: dns
-      - name: OpenTofu Init
-        run: tofu init
       - name: Apply plan
-        env:
-          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           set -euo pipefail
           tofu apply -auto-approve tfplan-dns.binary
