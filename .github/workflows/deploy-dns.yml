@@ -31,6 +31,8 @@ jobs:
         run: |
           set -euo pipefail
           tofu plan -out tfplan-dns.binary
+      - name: Show human-readable plan
+        run: tofu show tfplan-dns.binary
       - name: Upload plan artifact
         uses: actions/upload-artifact@v4
         with:
