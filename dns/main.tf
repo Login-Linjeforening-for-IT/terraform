@@ -15,13 +15,10 @@ variable "domains" {
     "lngalinjeforening.no",
     "login-ntnu.no",
     "login.coffee",
-    "login.no",
     "loginlf.no",
     "loginntnu.no",
     "logintnu.no",
     "logntnu.com",
-    "logntnu.no",
-    "logout.no",
     "ntnulogin.no",
     "tekkom.no"
   ]
@@ -103,4 +100,19 @@ resource "digitalocean_record" "cdn_cname" {
   type   = "CNAME"
   name   = "cdn"
   value  = "beehive.ams3.cdn.digitaloceanspaces.com."
+}
+
+resource "digitalocean_record" "google_verify_forms" {
+  domain = var.login
+  type   = "TXT"
+  name   = "forms"
+  value  = "google-site-verification=ryrYCeqvEF5EDnpjioRq1DIyY6PByK-LbtkFwcI7m-c"
+}
+
+resource "digitalocean_record" "login_wildcard_a" {
+  domain = var.login
+  type   = "A"
+  name   = "*"
+  ttl    = 300
+  value  = "128.39.140.240"
 }
