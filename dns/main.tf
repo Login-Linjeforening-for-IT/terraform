@@ -109,5 +109,6 @@ resource "digitalocean_record" "login_wildcard_a" {
   domain = var.login
   type   = "A"
   name   = "*"
+  ttl    = 300
   value  = "128.39.140.240"
 }
