@@ -124,7 +124,7 @@ resource "digitalocean_record" "login_wildcard_a" {
 resource "digitalocean_record" "logout_a" {
   domain = var.logout
   type   = "A"
-  name   = "*"
+  name   = "@"
   ttl    = 300
   value  = "128.39.142.138"
 }
