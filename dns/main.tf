@@ -106,7 +106,7 @@ resource "digitalocean_record" "google_verify_forms" {
 }
 
 resource "digitalocean_record" "login_apex_a" {
-  domain = "login.no"
+  domain = var.login
   type   = "A"
   name   = "@"
   ttl    = 300
@@ -115,6 +115,14 @@ resource "digitalocean_record" "login_apex_a" {
 
 resource "digitalocean_record" "login_wildcard_a" {
   domain = var.login
+  type   = "A"
+  name   = "*"
+  ttl    = 300
+  value  = "128.39.142.138"
+}
+
+resource "digitalocean_record" "logout_a" {
+  domain = var.logout
   type   = "A"
   name   = "*"
   ttl    = 300

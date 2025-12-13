@@ -4,6 +4,12 @@ variable "login" {
   default     = "login.no"
 }
 
+variable "logout" {
+  type        = string
+  description = "logout.no domain name"
+  default     = "logout.no"
+}
+
 variable "lb_external_ip" {
   type        = string
   description = "The external IP of the login.no load balancer"
