@@ -110,5 +110,5 @@ resource "digitalocean_record" "login_wildcard_a" {
   type   = "A"
   name   = "*"
   ttl    = 300
-  value  = "128.39.140.240"
+  value  = "128.39.142.138"
 }
