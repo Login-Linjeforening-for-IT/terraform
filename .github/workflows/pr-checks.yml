@@ -11,6 +11,11 @@ on:
       AWS_SECRET_ACCESS_KEY:
         required: true
       DIGITALOCEAN_TOKEN:
+        required: false
+      DOMENESHOP_TOKEN:
+        required: false
+      DOMENESHOP_SECRET:
+        required: false
       
 jobs:
   validate:
