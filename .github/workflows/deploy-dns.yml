@@ -20,6 +20,8 @@ jobs:
       DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      DOMENESHOP_TOKEN: ${{ secrets.DOMENESHOP_TOKEN }}
+      DOMENESHOP_SECRET: ${{ secrets.DOMENESHOP_SECRET }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -49,6 +51,8 @@ jobs:
       DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      DOMENESHOP_TOKEN: ${{ secrets.DOMENESHOP_TOKEN }}
+      DOMENESHOP_SECRET: ${{ secrets.DOMENESHOP_SECRET }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
