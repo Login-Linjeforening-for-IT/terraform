@@ -48,11 +48,11 @@ locals {
       }
       mx_records = [
         {
-          value    = "smtp.google.com"
+          value    = "smtp.google.com."
           priority = 30
         },
         {
-          value    = "smtp.google.com"
+          value    = "smtp.google.com."
           priority = 40
         }
       ]
