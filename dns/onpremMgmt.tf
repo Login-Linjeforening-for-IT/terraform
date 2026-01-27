@@ -3,8 +3,7 @@ locals {
     "idrac1",
     "idrac2",
     "idrac3",
-    "pve1",
-    "pve2",
+    "pve",
     "truenas"
   ]
 }
