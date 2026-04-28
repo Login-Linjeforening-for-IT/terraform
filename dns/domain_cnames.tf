@@ -6,8 +6,8 @@ locals {
 resource "digitalocean_record" "cname_records" {
   for_each = toset(local.domain_names)
 
-  domain = var.login
-  name   = each.value
+  domain = each.value
+  name   = "@"
   type   = "CNAME"
   value  = "${var.login}."
 
