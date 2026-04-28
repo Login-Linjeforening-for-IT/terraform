@@ -1,6 +1,6 @@
 locals {
-  excluded = ["logout.no", var.login]
-  domain_names = [ for d in module.domeneshop.domain_names : d if contains(local.excluded, d) == false ]
+  excluded     = ["logout.no", var.login]
+  domain_names = [for d in module.domeneshop.domain_names : d if contains(local.excluded, d) == false]
 }
 
 resource "digitalocean_record" "cname_records" {
@@ -10,5 +10,5 @@ resource "digitalocean_record" "cname_records" {
   name   = each.value
   type   = "CNAME"
   value  = "${var.login}."
-  
+
 }
