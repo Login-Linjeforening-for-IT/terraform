@@ -3,10 +3,16 @@ locals {
   domain_names = [for d in module.domeneshop.domain_names : d if contains(local.excluded, d) == false]
 }
 
-resource "digitalocean_record" "cname_records" {
+resource "digitalocean_domain" "all_domains" {
   for_each = toset(local.domain_names)
+  name     = each.value
 
-  domain = each.value
+}
+
+resource "digitalocean_record" "cname_records" {
+  for_each = digitalocean_domain.all_domains
+
+  domain = each.value.name
   name   = "@"
   type   = "CNAME"
   value  = "${var.login}."
