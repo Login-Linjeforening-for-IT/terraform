@@ -7,6 +7,18 @@ resource "digitalocean_domain" "all_domains" {
 
 }
 
+// Create A records for each domain
+// All top level domains point to the onprem proxy
+resource "digitalocean_record" "a_login_records" {
+  for_each = digitalocean_domain.all_domains
+
+  domain = each.value.name
+  name   = "@"
+  type   = "A"
+  value  = var.onprem_ip
+
+}
+
 resource "digitalocean_record" "cdn_cname" {
   domain = var.login
   type   = "CNAME"
@@ -14,26 +26,10 @@ resource "digitalocean_record" "cdn_cname" {
   value  = "beehive.ams3.cdn.digitaloceanspaces.com."
 }
 
-resource "digitalocean_record" "login_apex_a" {
-  domain = var.login
-  type   = "A"
-  name   = "@"
-  ttl    = 300
-  value  = var.onprem_ip
-}
-
 resource "digitalocean_record" "login_wildcard_a" {
   domain = var.login
   type   = "A"
   name   = "*"
-  ttl    = 300
-  value  = var.onprem_ip
-}
-
-resource "digitalocean_record" "logout_a" {
-  domain = var.logout
-  type   = "A"
-  name   = "@"
   ttl    = 300
   value  = var.onprem_ip
 }
