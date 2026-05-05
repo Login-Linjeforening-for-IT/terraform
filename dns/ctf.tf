@@ -9,7 +9,7 @@ resource "digitalocean_record" "practice_ctf_a" {
   domain = var.login
   type   = "A"
   name   = "practice.ctf"
-  value  = "68.183.66.181"
+  value  = "129.241.150.215"
 }
 
 resource "digitalocean_record" "skyhigh_ctf_a" {
