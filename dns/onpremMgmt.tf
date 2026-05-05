@@ -13,7 +13,7 @@ resource "digitalocean_record" "onprem_mgmt_record" {
   domain = var.login
   name   = "onprem"
   type   = "A"
-  value  = "128.39.140.144"
+  value  = var.onprem_mgmt_ip
 }
 
 resource "digitalocean_record" "onprem_cname_records" {

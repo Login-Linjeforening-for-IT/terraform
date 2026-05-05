@@ -10,8 +10,20 @@ variable "logout" {
   default     = "logout.no"
 }
 
-variable "lb_external_ip" {
+variable "onprem_mgmt_ip" {
   type        = string
-  description = "The external IP of the login.no load balancer"
-  default     = "209.38.52.30"
+  description = "The IP of the onprem management server"
+  default     = "128.39.140.144"
+}
+
+variable "onprem_ip" {
+  type        = string
+  description = "The IP of the onprem proxy"
+  default     = "128.39.142.138"
+}
+
+variable "offprem_ip" {
+  type        = string
+  description = "The IP of the offprem server"
+  default     = "57.129.124.84"
 }
