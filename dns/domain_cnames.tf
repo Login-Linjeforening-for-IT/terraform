@@ -9,6 +9,6 @@ resource "digitalocean_record" "a_login_records" {
   domain = each.value.name
   name   = "@"
   type   = "A"
-  value  = digitalocean_record.login_wildcard_a.value
+  value  = var.onprem_ip
 
 }
