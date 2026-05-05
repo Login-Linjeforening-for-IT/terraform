@@ -10,9 +10,9 @@ resource "digitalocean_domain" "all_domains" {
 }
 
 resource "digitalocean_record" "cname_records" {
-  for_each = toset(local.domain_names)
+  for_each = digitalocean_domain.all_domains
 
-  domain = each.value
+  domain = each.value.name
   name   = "@"
   type   = "CNAME"
   value  = "${var.login}."
