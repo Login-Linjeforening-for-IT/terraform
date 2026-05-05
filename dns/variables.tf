@@ -22,7 +22,7 @@ variable "onprem_ip" {
   default     = "128.39.142.138"
 }
 
-variable "ofprem_ip" {
+variable "offprem_ip" {
   type        = string
   description = "The IP of the offprem server"
   default     = "57.129.124.84"
