@@ -5,8 +5,8 @@ locals {
 
 resource "digitalocean_domain" "all_domains" {
   for_each = toset(local.domain_names)
-  name = each.value
-  
+  name     = each.value
+
 }
 
 resource "digitalocean_record" "cname_records" {
