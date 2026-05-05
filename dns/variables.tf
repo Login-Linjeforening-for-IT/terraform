@@ -17,13 +17,13 @@ variable "onprem_mgmt_ip" {
 }
 
 variable "onprem_ip" {
-  type = string
+  type        = string
   description = "The IP of the onprem proxy"
-  default = "128.39.142.138"
+  default     = "128.39.142.138"
 }
 
 variable "ofprem_ip" {
-  type = string
+  type        = string
   description = "The IP of the offprem server"
-  default = "57.129.124.84"
+  default     = "57.129.124.84"
 }
