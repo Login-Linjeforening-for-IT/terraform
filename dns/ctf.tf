@@ -12,13 +12,6 @@ resource "digitalocean_record" "practice_ctf_a" {
   value  = "129.241.150.215"
 }
 
-resource "digitalocean_record" "skyhigh_ctf_a" {
-  domain = var.login
-  type   = "A"
-  name   = "skyhigh.ctf"
-  value  = "129.241.150.243"
-}
-
 resource "digitalocean_record" "rebus_ctf_a" {
   domain = var.login
   type   = "A"
