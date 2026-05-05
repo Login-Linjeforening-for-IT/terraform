@@ -39,7 +39,7 @@ resource "digitalocean_record" "vaultwarden_a" {
   type   = "A"
   name   = "vault"
   ttl    = 300
-  value  = var.ofprem_ip
+  value  = var.offprem_ip
 }
 
 resource "digitalocean_record" "zammad_a" {
@@ -47,7 +47,7 @@ resource "digitalocean_record" "zammad_a" {
   type   = "A"
   name   = "zammad"
   ttl    = 300
-  value  = var.ofprem_ip
+  value  = var.offprem_ip
 }
 
 resource "digitalocean_record" "offprem_record" {
@@ -55,5 +55,5 @@ resource "digitalocean_record" "offprem_record" {
   type   = "A"
   name   = "offprem"
   ttl    = 300
-  value  = var.ofprem_ip
+  value  = var.offprem_ip
 }
