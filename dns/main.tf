@@ -63,5 +63,5 @@ resource "digitalocean_record" "linux_install_party_record" {
   type   = "A"
   name   = "linux"
   ttl    = 300
-  value  = 128.39.142.60
+  value  = "128.39.142.60"
 }
